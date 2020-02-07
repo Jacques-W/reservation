@@ -6,6 +6,7 @@ use App\Form\EventCreationType;
 use App\Repository\EventRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Event;
 
 class EventController extends AbstractController
