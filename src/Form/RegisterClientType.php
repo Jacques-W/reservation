@@ -5,9 +5,9 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
 class RegisterClientType extends AbstractType
@@ -21,8 +21,8 @@ class RegisterClientType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('roles')
-            ->add('password', TextType::class, [
+            
+            ->add('password', PasswordType::class, [
                 'label' => 'Mot de Passe',
                 'attr' => [
                     'class' => 'form-control'
@@ -64,9 +64,10 @@ class RegisterClientType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('token')
-            ->add('active')
-            ->add('created_at')
+            // ->add('roles')
+            // ->add('token')
+            // ->add('active')
+            // ->add('created_at')
         ;
     }
 
