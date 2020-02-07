@@ -7,18 +7,18 @@
 <div class="container">
     <h1>Inscription</h1>
 
-    <form>
+      {{ form_start(form) }}
   <div class="form-group">
-    <label for="nom">{{ form.nom }}</label>
-    <label for="prenom">{{ form.prenom }}</label>
-    <label for="password">{{ form.password }}</label>
-    <label for="email">{{ form.email }}</label>
-    <label for="adresse">{{form.adresse}}</label>
-    <label for="codepostal">{{ form.codepostal }}</label>
-    <label for="ville">{{ form.ville }}</label>
-    <label for="telephone">{{ form.telephone }}</label>
+    <label for="nom">{{ form_row(form.nom) }}</label>
+    <label for="prenom">{{ form_row(form.prenom) }}</label>
+    <label for="password">{{ form_row(form.password) }}</label>
+    <label for="email">{{ form_row(form.email) }}</label>
+    <label for="adresse">{{ form_row(form.adresse) }}</label>
+    <label for="codepostal">{{ form_row(form.codepostal) }}</label>
+    <label for="ville">{{ form_row(form.ville) }}</label>
+    <label for="telephone">{{ form_row(form.telephone) }}</label>
   </div>
-    </form>
+      {{ form_end(form) }}
 
 </div>
 {% endblock %}
