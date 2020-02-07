@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <h1>Inscription</h1>
+
+    <form>
+  <div class="form-group">
+    <label for="nom">{{ form.nom }}</label>
+    <label for="prenom">{{ form.prenom }}</label>
+    <label for="password">{{ form.password }}</label>
+    <label for="email">{{ form.email }}</label>
+    <label for="adresse">{{form.adresse}}</label>
+    <label for="codepostal">{{ form.codepostal }}</label>
+    <label for="ville">{{ form.ville }}</label>
+    <label for="telephone">{{ form.telephone }}</label>
+  </div>
+    </form>
+
+</div>
+{% endblock %}
