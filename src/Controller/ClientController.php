@@ -32,8 +32,8 @@ class ClientController extends AbstractController
             ->setRoles($data['ville'])
             ->setRoles($data['telephone']);
 
-            $em->persist($client);
-            $em->flush();
+        $em->persist($client);
+        $em->flush();
 
         return $this->render('client/register.html.twig', [
             'controller_name' => 'ClientController',

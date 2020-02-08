@@ -56,6 +56,16 @@ class Pro
      */
     private $siret;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $token;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $active;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -153,6 +163,30 @@ class Pro
     public function setSiret(int $siret): self
     {
         $this->siret = $siret;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(string $token): self
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    public function getActive(): ?int
+    {
+        return $this->active;
+    }
+
+    public function setActive(int $active): self
+    {
+        $this->active = $active;
 
         return $this;
     }

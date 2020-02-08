@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Form\EventCreationType;
-use App\Repository\EventRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,27 +16,34 @@ class EventController extends AbstractController
     public function event(Request $request)
     {
 
+        $em = $this->getDoctrine()->getManager();
+
+        $event = new Event();
         $form = $this->createForm(EventCreationType::class, $event);
 
+        //Gestion Formulaire + Verification//
         $form->handleRequest($request);
 
-        //Verif que le formu n'soit pas vide au submit//
-        if ($form->isSubmitted() && $form->isValid()) {
-            //recup des données
-            //$event = $form->getData();
+        if ($form->isSubmitted() && $form->isValid()){
+            $event = $request->request->all();
 
-            //recup de l'entity + table events
-            $em = $this->getDoctrine()->getManager();
-            $repo = $em->getRepository(EventRepository::class);
+            $eventValide = (new Event())
+                ->setArtiste($event['event_creation']['artiste'])
+                ->setPresentation($event['event_creation']['presentation'])
+                ->setDate($event['event_creation']['date'])
+                ->setHeure($event['event_creation']['heure'])
+                ->setAdresse($event['event_creation']['adresse'])
+                ->setType($event['event_creation']['type'])
+                ->setTarif($event['event_creation']['tarif'])
 
-            //requete de recup de toutes les données formu
-            $data = $request->request->all();
-            $em->persist($data);
+            ;
+            //gestion + insertion dans la DB
+            $em->persist($eventValide);
             $em->flush();
-            $this->addFlash('success', 'L\'évènement à bien été créé !');
+            $this->addFlash('success', 'L\'évènement à bien été ajouté !');
         }
 
-        return $this->render('event/index.html.twig', [
+        return $this->render('event/event.html.twig', [
             'controller_name' => 'EventController',
             'form' => $form->createView()
         ]);
