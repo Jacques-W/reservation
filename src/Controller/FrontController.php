@@ -5,15 +5,19 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
+use App\Repository\EventRepository;
+
 class FrontController extends AbstractController
 {
     /**
-     * @Route("/front", name="front")
+     * @Route("/", name="front")
      */
-    public function index()
+    public function index(EventRepository $eventRepo)
     {
+
+
         return $this->render('front/index.html.twig', [
-            'controller_name' => 'FrontController',
+            'event' => $eventRepo->findAll()
         ]);
     }
 }
