@@ -56,7 +56,17 @@ class EmailService
 			->context($data['context']);
 		$this->mailer->send($email);
 	}
+	public function password_forgotten($user, $link)
+	{
+		$data = array(
+			'to' => $user->getEmail(),
+			'subject' => "Modifier votre mot de passe",
+			'template' => 'emails/security/password_forgotten.email.twig',
+			'context' => ['user'=>$user, 'link' => $link]
 
+		);
+		$this->send($data);
+	}
 	public function register($user)
 	{
 		$data = array(

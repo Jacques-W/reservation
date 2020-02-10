@@ -11,6 +11,11 @@
     <body>
         {% include 'front/header.html.twig' %}
 
+        {% set currentPage = app.request.attributes.get('_route') %}
+        {# HEADER #}
+            {# {% include 'front/header.html.twig' %} #}
+            {{ render(controller('App\\Controller\\FrontController::header', { currentPage: currentPage })) }}
+
         {% for message in app.flashes('success')  %}
             <div class="col-md-12 text-center">
                 <div class="alert alert-success alert-dismissible fade show" role="alert">{{ message }}

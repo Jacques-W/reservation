@@ -4,7 +4,20 @@
 
 {% block body %}
 
+    <h1>Bienvenue sur la page d'accueil</h1>
+    <div class="my-5 border">
 
+        {% if app.user and app.user.hasRole('ROLE_STAFF') %}
+            Bienvenue
+            {{ app.user.prenom }} {{ app.user.nom }}!
+        {% elseif  app.user and app.user.hasRole('ROLE_PUBLISHER') %}
+            Bienvenue
+            {{ app.user.prenom }} {{ app.user.nom }}!
+        {% else %}
+            Vous n'êtes pas connecté
+        {% endif %}
+
+    </div>
 
     <section>
         <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
