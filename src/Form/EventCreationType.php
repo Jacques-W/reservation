@@ -32,7 +32,6 @@ class EventCreationType extends AbstractType
                     'placeholder' => 'JJ/MM/AAAA',
                     'class' => 'form-control'
                 ]
-
             ])
             ->add('heure', TextType::class, [
                 'label' => 'L\'heure de votre représentation',

@@ -27,7 +27,7 @@ class Event
     private $presentation;
 
     /**
-     * @ORM\Column(type="string", length=5)
+     * @ORM\Column(type="string", length=255)
      */
     private $date;
 

@@ -56,26 +56,6 @@ class Pro
      */
     private $siret;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $token;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $active;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $adresse;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $created_at;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -173,54 +153,6 @@ class Pro
     public function setSiret(int $siret): self
     {
         $this->siret = $siret;
-
-        return $this;
-    }
-
-    public function getToken(): ?string
-    {
-        return $this->token;
-    }
-
-    public function setToken(string $token): self
-    {
-        $this->token = $token;
-
-        return $this;
-    }
-
-    public function getActive(): ?int
-    {
-        return $this->active;
-    }
-
-    public function setActive(int $active): self
-    {
-        $this->active = $active;
-
-        return $this;
-    }
-
-    public function getAdresse(): ?string
-    {
-        return $this->adresse;
-    }
-
-    public function setAdresse(string $adresse): self
-    {
-        $this->adresse = $adresse;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->created_at;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $created_at): self
-    {
-        $this->created_at = $created_at;
 
         return $this;
     }

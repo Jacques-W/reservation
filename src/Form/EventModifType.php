@@ -15,7 +15,7 @@ class EventModifType extends AbstractType
     {
         $builder
             ->add('artiste', TextType::class, [
-                'label' => 'Nom de l\'artiste',
+                'label' => 'Nom de l\'artiste à modifier',
                 'attr' => [
                     'class' => 'form-control'
                 ]
@@ -47,8 +47,8 @@ class EventModifType extends AbstractType
                 ]
             ])
             ->add('type', ChoiceType::class, [
-                'choice' => [
-                    'Veuillez Selectionner le nouveau type de la présentation' => [
+                'choices' => [
+                    'Selectionnez le nouveau Type de présentation...' => [
                         'concert' => 'Concert',
                         'spectacle' => 'Spectacle',
                         'humour' => 'Humour'

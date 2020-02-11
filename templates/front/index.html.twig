@@ -4,20 +4,7 @@
 
 {% block body %}
 
-    <h1>Bienvenue sur la page d'accueil</h1>
-    <div class="my-5 border">
 
-        {% if app.user and app.user.hasRole('ROLE_STAFF') %}
-            Bienvenue
-            {{ app.user.prenom }} {{ app.user.nom }}!
-        {% elseif  app.user and app.user.hasRole('ROLE_PUBLISHER') %}
-            Bienvenue
-            {{ app.user.prenom }} {{ app.user.nom }}!
-        {% else %}
-            Vous n'êtes pas connecté
-        {% endif %}
-
-    </div>
 
     <section>
         <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
@@ -33,16 +20,20 @@
 
 
     <section class="event">
+
+
+
+
         <div class="row row-cols-1 row-cols-md-3">
-            {% for events in event %}
+            {% for event in events %}
             <div class="col mb-4">
                 <div class="card h-100">
                     <img src="img/artist/artist1.jpg" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">{{ events.artiste }}</h5>
-                        <p class="card-text">{{ events.date }} - {{ events.heure }}
-                            <br> {{ events.presentation }} <br> {{ events.tarif }}
-                            <br> {{ events.type }} <br> {{ events.adresse }}</p>
+                        <h5 class="card-title">{{ event.artiste }}</h5>
+                        <p class="card-text">{{ event.date }} - {{ event.heure }}
+                            <br> {{ event.presentation }} <br> {{ event.tarif }}
+                            <br> {{ event.type }} <br> {{ event.adresse }}</p>
                     </div>
                 </div>
             </div>
@@ -82,10 +73,8 @@
         <p> logo + copyright </p>
     </footer>
 
-
-    <!-- Les scripts sont deja implémentés dans le base (commenté par Jacques pour éviter le double chargement des scripts ) -->
     <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
             integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
             crossorigin="anonymous"></script>
@@ -94,6 +83,6 @@
             crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-            crossorigin="anonymous"></script> -->
+            crossorigin="anonymous"></script>
 
 {% endblock %}
