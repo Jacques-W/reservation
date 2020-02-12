@@ -5,13 +5,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>{% block title %}{% endblock %}</title>
         {% block stylesheets %}
-            <link rel="stylesheet" href="bootstrap.min.css">
+            <link rel="stylesheet" href="css/bootstrap.min.css">
         {% endblock %}
     </head>
     <body>
-        {% include 'body/header.html.twig' %}
+        {# {% include 'body/header.html.twig' %} #}
         {% block body %}{% endblock %}
-        {% include 'body/footer.html.twig' %}
+        {# {% include 'body/footer.html.twig' %} #}
         {% block javascripts %}
             <!-- Jquery -->
             <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>

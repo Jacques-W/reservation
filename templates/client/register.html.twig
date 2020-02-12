@@ -9,14 +9,14 @@
 
       {{ form_start(form) }}
   <div class="form-group">
-    <label for="nom">{{ form_row(form.nom) }}</label>
-    <label for="prenom">{{ form_row(form.prenom) }}</label>
-    <label for="password">{{ form_row(form.password) }}</label>
-    <label for="email">{{ form_row(form.email) }}</label>
-    <label for="adresse">{{ form_row(form.adresse) }}</label>
-    <label for="codepostal">{{ form_row(form.codepostal) }}</label>
-    <label for="ville">{{ form_row(form.ville) }}</label>
-    <label for="telephone">{{ form_row(form.telephone) }}</label>
+    <div>{{ form_row(form.nom) }}</div>
+    <div>{{ form_row(form.prenom) }}</div>
+    <div>{{ form_row(form.password) }}</div>
+    <div>{{ form_row(form.email) }}</div>
+    <div>{{ form_row(form.adresse) }}</div>
+    <div>{{ form_row(form.codepostal) }}</div>
+    <div>{{ form_row(form.ville) }}</div>
+    <div>{{ form_row(form.telephone) }}</div>
   </div>
       {{ form_end(form) }}
 

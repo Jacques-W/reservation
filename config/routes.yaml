@@ -1,7 +1,3 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
-
-register:
-  path: /registerClient
-  controller: App\Controller\RegisterController::register
