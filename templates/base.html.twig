@@ -9,24 +9,9 @@
         {% endblock %}
     </head>
     <body>
-        {% for message in app.flashes('success') %}
-            <div class="alert alert-dismissible alert-success" role="alert">{{ message }}
-                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">Fermer</span></button>
-            </div>
-        {% endfor %}
-        {% for message in app.flashes('danger') %}
-            <div class="alert alert-dismissible alert-danger" role="alert">{{ message }}
-                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">Fermer</span></button>
-            </div>
-        {% endfor %}
-        {% for message in app.flashes('warning') %}
-            <div class="alert alert-dismissible alert-warning" role="alert">{{ message }}
-                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">Fermer</span></button>
-            </div>
-        {% endfor %}
-        {% include 'front/header.html.twig' %}
+        {# {% include 'body/header.html.twig' %} #}
         {% block body %}{% endblock %}
-        {% include 'front/footer.html.twig' %}
+        {# {% include 'body/footer.html.twig' %} #}
         {% block javascripts %}
             <!-- Jquery -->
             <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
