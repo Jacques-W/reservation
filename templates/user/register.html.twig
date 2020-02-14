@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription
+{% endblock %}
+
+{% block body %}
+	<h1>Inscription</h1>
+	<br>
+	<p>Inscription Pro <a href="{{path('app_registerPro')}}">ici</a>!</p>
+
+	{{ form_start(form) }}
+
+	<div class="row">
+		<div class="col-md-6">
+			{{ form_row(form.prenom) }}
+		</div>
+		<div class="col-md-6">
+			{{ form_row(form.nom) }}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			{{ form_row(form.email.first) }}
+		</div>
+		<div class="col-md-6">
+			{{ form_row(form.email.second) }}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			{{ form_row(form.password.first) }}
+		</div>
+		<div class="col-md-6">
+			{{ form_row(form.password.second) }}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			{{ form_row(form.adresse) }}
+		</div>
+		<div class="col-md-6">
+			{{ form_row(form.codepostal) }}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			{{ form_row(form.ville) }}
+		</div>
+		<div class="col-md-6">
+			{{ form_row(form.telephone) }}
+		</div>
+	</div>
+	{{ form_row(form.agreeTerms) }}
+
+	{{ form_end(form) }}
+{% endblock %}

@@ -13,16 +13,13 @@ class PublisherController extends AbstractController
      */
     public function admin_dispatch()
     {
-        if ($this->getUser()->hasRole('ROLE_STAFF')) {
+        if($this->getUser()->hasRole('ROLE_STAFF')){
             return $this->redirectToRoute('staff');
-        } else {
+        }else{
             return $this->redirectToRoute('publisher_admin');
         }
     }
-
-
-
-
+    
     /**
      * @Route("/a/", name="publisher_admin")
      */

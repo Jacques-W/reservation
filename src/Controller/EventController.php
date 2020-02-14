@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Form\EventCreationType;
 use App\Form\EventModifType;
 use App\Entity\Event;
-
+use App\Entity\Reservations;
 use App\Repository\EventRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,60 +16,95 @@ use Symfony\Component\HttpFoundation\Request;
 class EventController extends AbstractController
 {
     /**
-     * @Route("/event", name="event")
+     * @Route("/staff/eventCreate/{id}", name="event")
      */
-    public function event(Request $request)
+    public function event($id, Request $request, EventRepository $eventRepo)
     {
-        $em = $this->getDoctrine()->getManager();
-        $event = new Event();
+        if($id){
+            $event = $eventRepo->find($id);
+            $nouveau = false;
+        }else{
+            $event = new Event();
+            $nouveau = true;
+        }
         $form = $this->createForm(EventCreationType::class, $event);
 
         $form->handleRequest($request);
 
-        //Verif que le formu n'soit pas vide au submit//
-        if ($form->isSubmitted() && $form->isValid()) {
-            //recup des données
-
-            //recup de l'entity + table events
+        if($form->isSubmitted() && $form->isValid()){
             $em = $this->getDoctrine()->getManager();
 
-            //requete de recup de toutes les données formu
             $event = $form->getData();
+            $nbdeplace = 15;
+
+            for($i=1; $i <= $nbdeplace; $i++){
+              $reservation = (new Reservations())
+                ->setEvent($event)
+                ->setPlace($i);
+
+              $em->persist($reservation);
+            }
+
             $em->persist($event);
             $em->flush();
-            $this->addFlash('success', 'L\'évènement à bien été créé !');
+
+            $this->addFlash("success", "L'évènement à bien été ". ($nouveau ? 'créé' : 'modifié') ." !");
         }
 
-        //------------------//
-        //gestion des modif//
-        //-----------------//
-
-
-        $formulaireModif = $this->createForm(EventModifType::class);
-
-        $formulaireModif->handleRequest($request);
-        if($formulaireModif->isSubmitted() && $formulaireModif->isValid()){
+        $action = $request->query->get('action');
+        if($action == 'delete'){
             $em = $this->getDoctrine()->getManager();
-            $repo = $em->getRepository(Event::class);
-            $data = $request->request->all();
-
-            $repo = $repo->findOneBy(['artiste' => $data['event_modif']['artiste']]);
-
-            $repo->setPresentation($data['event_modif']['presentation']);
-            $repo->setDate($data['event_modif']['date']);
-            $repo->setHeure($data['event_modif']['heure']);
-            $repo->setAdresse($data['event_modif']['adresse']);
-            $repo->setType($data['event_modif']['type']);
-            $repo->settarif($data['event_modif']['tarif']);
-
+            $em->remove($event);
             $em->flush();
-            $this->addFlash('warning', 'L\'évènement à bien été modifié !');
+
+            $this->addFlash('danger', "L'article a bien été supprimé.");
+            return $this->redirectToRoute('accueil');
         }
 
         return $this->render('event/event.html.twig', [
-            'controller_name' => 'EventController',
             'form' => $form->createView(),
-            'modif' => $formulaireModif->createView()
+            'nouveau' => $nouveau
+        ]);
+    }
+
+
+
+
+ /**
+     * @Route("/enventSingle/{id}", name="eventSingle")
+     */
+    public function eventSingle($id, Request $request)
+    {
+
+        // On récupère l' ArticlesRepository
+        $em = $this->getDoctrine()->getManager();
+        $eventsRepo = $em->getRepository(Event::class);
+
+        // On récupère l'article, en fonction de l'ID qui est dans l'URL
+        $event= $eventsRepo->find($id);
+
+        if(!$event){
+            $this->addFlash('danger', "L'article demandé n'a pas été trouvé.");
+            return $this->redirectToRoute('eventSingle', ['id' => $event->getId()]);
+        }
+
+        return $this->render('event/eventSingle.html.twig',[
+        'event' => $event    
+        ]);
+    }
+    /**
+     * @Route("/user/commandes", name="commandes")
+     */
+    public function commandes(EventRepository $eventRepo)
+    {
+        $events = $eventRepo->createQueryBuilder('c')
+            ->where('c.date > :date')->setParameter('date', new \DateTime())
+            ->orderBy('c.date', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        return $this->render('user/commandes.html.twig', [
+            'events' => $events
         ]);
     }
 }

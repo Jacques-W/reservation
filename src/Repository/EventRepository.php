@@ -18,7 +18,7 @@ class EventRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Event::class);
     }
-
+  
     // /**
     //  * @return Event[] Returns an array of Event objects
     //  */

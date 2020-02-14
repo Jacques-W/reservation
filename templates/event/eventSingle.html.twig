@@ -1,0 +1,26 @@
+{% extends "base.html.twig" %}
+{% block body %}
+<div class="col-md-4 mb-4">
+	<div class="card h-100">
+		<img src="https://www.lamaisonbleue-stbg.com/fichiers/2020/01/jamesleg-500x500.jpg" class="card-img-top" alt="">
+		<div class="card-body">
+			<h5 class="card-title">{{ event.artiste }}</h5>
+			<p class="card-text">
+				Le
+				{{ event.date| date('d/m/Y')}}
+				à
+				{{ event.date| date('H:i:s')}}
+				<br>
+				{{ event.presentation }}
+				<br>
+				{{ event.tarif }}
+				<br>
+				{{ event.type }}
+				<br>
+				{{ event.adresse }}</p>
+		</div>
+	</div>
+</div>
+<a href="{{ path('reservation', { id: event.id }) }}"class="btn btn-success">Réserver <img src="{{asset('img/cart.png')}}"></a>
+
+{% endblock %}

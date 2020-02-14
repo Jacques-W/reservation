@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Entity;
-
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
 class User implements UserInterface
 {
@@ -35,6 +38,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank
      */
     private $nom;
 
@@ -49,7 +53,11 @@ class User implements UserInterface
     private $adresse;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=7)
+     * @Assert\Type(
+     *     type="integer", message="Le code postal contient uniquement des chiffres")
+     * @Assert\Length(min=5)
+     * @Assert\Length(max=5)
      */
     private $codepostal;
 
@@ -59,7 +67,11 @@ class User implements UserInterface
     private $ville;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=20)
+     *  @Assert\Type(
+     *     type="integer", message="Le numero de téléphone contient uniquement des chiffres")
+     * @Assert\Length(min=10)
+     * @Assert\Length(max=20)
      */
     private $telephone;
 
@@ -77,6 +89,24 @@ class User implements UserInterface
      * @ORM\Column(type="datetime")
      */
     private $created_at;
+    /**
+     * @ORM\Column(type="string", length=14, nullable=true)
+     * @Assert\Type(
+     *     type="integer", message="Le numero de téléphone contient uniquement des chiffres")
+     * @Assert\Length(min=14)
+     * @Assert\Length(max=14)
+     */
+    private $siret;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Reservations", mappedBy="user")
+     */
+    private $reservations;
+
+    public function __construct()
+    {
+        $this->reservations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -112,7 +142,7 @@ class User implements UserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = 'ROLE_PUBLISHER';
 
         return array_unique($roles);
     }
@@ -124,6 +154,16 @@ class User implements UserInterface
         return $this;
     }
 
+
+    public function hasRole($role)
+    {
+        if (in_array($role, $this->getRoles())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * @see UserInterface
      */
@@ -131,7 +171,17 @@ class User implements UserInterface
     {
         return (string) $this->password;
     }
+public function getSiret(): ?int
+    {
+        return $this->siret;
+    }
 
+    public function setSiret(int $siret): self
+    {
+        $this->siret = $siret;
+
+        return $this;
+    }
     public function setPassword(string $password): self
     {
         $this->password = $password;
@@ -252,6 +302,9 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getFullname(){
+        return $this->prenom. ' ' . $this->nom;
+    }
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->created_at;
@@ -260,6 +313,48 @@ class User implements UserInterface
     public function setCreatedAt(\DateTimeInterface $created_at): self
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Reservations[]
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservations $reservation): self
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations[] = $reservation;
+            $reservation->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservations $reservation): self
+    {
+        if ($this->reservations->contains($reservation)) {
+            $this->reservations->removeElement($reservation);
+            // set the owning side to null (unless already changed)
+            if ($reservation->getUser() === $this) {
+                $reservation->setUser(null);
+            }
+        }
 
         return $this;
     }

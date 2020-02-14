@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservation!
+{% endblock %}
+
+{% block body %}
+
+
+	<h1>Réservation<h1>
+		<form method="POST" class="mt-4">
+			{% for reservation in event.reservations %}
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="{{reservation.id}}" name="reservations[]" id="defaultCheck1">
+					<label class="form-check-label" for="defaultCheck1">
+						{{reservation.place}}
+					</label>
+				</div>
+			{% endfor %}
+				<div class="text-right mt-4">
+					<a href="{{ path('panier', {id: event.id}) }}">
+						<button type="submit" class="btn btn-primary">Valider</button>
+					</a>
+				</div>
+		</form>
+{% endblock %}

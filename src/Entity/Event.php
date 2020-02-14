@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -27,14 +29,9 @@ class Event
     private $presentation;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="datetime")
      */
     private $date;
-
-    /**
-     * @ORM\Column(type="string", length=20)
-     */
-    private $heure;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -50,6 +47,16 @@ class Event
      * @ORM\Column(type="integer")
      */
     private $tarif;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Reservations", mappedBy="event", orphanRemoval=true)
+     */
+    private $reservations;
+
+    public function __construct()
+    {
+        $this->reservations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -80,26 +87,14 @@ class Event
         return $this;
     }
 
-    public function getDate(): ?string
+    public function getDate(): ?\DateTimeInterface
     {
         return $this->date;
     }
 
-    public function setDate(string $date): self
+    public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
-
-        return $this;
-    }
-
-    public function getHeure(): ?string
-    {
-        return $this->heure;
-    }
-
-    public function setHeure(string $heure): self
-    {
-        $this->heure = $heure;
 
         return $this;
     }
@@ -136,6 +131,37 @@ class Event
     public function setTarif(int $tarif): self
     {
         $this->tarif = $tarif;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Reservations[]
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservations $reservation): self
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations[] = $reservation;
+            $reservation->setEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservations $reservation): self
+    {
+        if ($this->reservations->contains($reservation)) {
+            $this->reservations->removeElement($reservation);
+            // set the owning side to null (unless already changed)
+            if ($reservation->getEvent() === $this) {
+                $reservation->setEvent(null);
+            }
+        }
 
         return $this;
     }

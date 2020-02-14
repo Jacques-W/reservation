@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200210081237 extends AbstractMigration
+final class Version20200212131708 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,8 +22,9 @@ final class Version20200210081237 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE event CHANGE date date VARCHAR(5) NOT NULL');
-        $this->addSql('ALTER TABLE pro ADD adresse VARCHAR(255) NOT NULL, ADD created_at DATETIME NOT NULL');
+        $this->addSql('ALTER TABLE reservations ADD CONSTRAINT FK_4DA23971F7E88B FOREIGN KEY (event_id) REFERENCES event (id)');
+        $this->addSql('CREATE INDEX IDX_4DA23971F7E88B ON reservations (event_id)');
+        $this->addSql('ALTER TABLE reservations RENAME INDEX user_id TO IDX_4DA239A76ED395');
     }
 
     public function down(Schema $schema) : void
@@ -31,7 +32,8 @@ final class Version20200210081237 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE event CHANGE date date VARCHAR(50) CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_unicode_ci`');
-        $this->addSql('ALTER TABLE pro DROP adresse, DROP created_at');
+        $this->addSql('ALTER TABLE reservations DROP FOREIGN KEY FK_4DA23971F7E88B');
+        $this->addSql('DROP INDEX IDX_4DA23971F7E88B ON reservations');
+        $this->addSql('ALTER TABLE reservations RENAME INDEX idx_4da239a76ed395 TO user_id');
     }
 }

@@ -1,24 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inscription{% endblock %}
+{% block title %}Inscription
+{% endblock %}
 
 {% block body %}
+	<h1>Inscription</h1>
 
-<div class="container">
-    <h1>Inscription</h1>
+	{{ form_start(form) }}
 
-      {{ form_start(form) }}
-  <div class="form-group">
-    <div>{{ form_row(form.nom) }}</div>
-    <div>{{ form_row(form.prenom) }}</div>
-    <div>{{ form_row(form.password) }}</div>
-    <div>{{ form_row(form.email) }}</div>
-    <div>{{ form_row(form.adresse) }}</div>
-    <div>{{ form_row(form.codepostal) }}</div>
-    <div>{{ form_row(form.ville) }}</div>
-    <div>{{ form_row(form.telephone) }}</div>
-  </div>
-      {{ form_end(form) }}
+	<div class="row">
+		<div class="col-md-6">
+			{{ form_row(form.prenom) }}
+		</div>
+		<div class="col-md-6">
+			{{ form_row(form.nom) }}
+		</div>
+	</div>
+	{{ form_row(form.email) }}
+	<div class="row">
+		<div class="col-md-6">
+			{{ form_row(form.password.first) }}
+		</div>
+		<div class="col-md-6">
+			{{ form_row(form.password.second) }}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			{{ form_row(form.adresse) }}
+		</div>
+		<div class="col-md-6">
+			{{ form_row(form.codepostal) }}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			{{ form_row(form.ville) }}
+		</div>
+		<div class="col-md-6">
+			{{ form_row(form.telephone) }}
+		</div>
+	</div>
+	{{ form_row(form.agreeTerms) }}
 
-</div>
+	{{ form_end(form) }}
 {% endblock %}

@@ -1,39 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inscription{% endblock %}
+{% block title %}Inscription
+{% endblock %}
 
 {% block body %}
 
-<div class="container">
-    <h1>Formulaire événement</h1>
+	<div class="container">
+		<h1>Formulaire événement</h1>
 
-      {{ form_start(form) }}
-  <div class="form-group">
-    <div>{{ form_row(form.artiste) }}</div>
-    <div>{{ form_row(form.presentation) }}</div>
-    <div>{{ form_row(form.date) }}</div>
-    <div>{{ form_row(form.heure) }}</div>
-    <div>{{ form_row(form.adresse) }}</div>
-    <div>{{ form_row(form.type) }}</div>
-    <div>{{ form_row(form.tarif) }}</div>
-  </div>
+		<div class="container">
+        <h1>Formulaire événement</h1>
 
-  <button type="submit" class="btn btn-primary text-center">Envoyer</button>
-      {{ form_end(form) }}
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+                <a href="{{ path('event', {id: 0}) }}">
+                    <button type="submit" class="btn btn-primary text-center">✏ {{ nouveau ? "Créer" : "Modifier" }} l'événement</button>
+                </a>
+        {{ form_end(form) }}
 
-      {{ form_start(modif) }}
-      <div class="form-group">
-        <div>{{ form_row(modif.artiste) }}</div>
-        <div>{{ form_row(modif.presentation) }}</div>
-        <div>{{ form_row(modif.date) }}</div>
-        <div>{{ form_row(modif.heure) }}</div>
-        <div>{{ form_row(modif.adresse) }}</div>
-        <div>{{ form_row(modif.type) }}</div>
-        <div>{{ form_row(modif.tarif) }}</div>
-      </div>
-
-      <button type="submit" class="btn btn-primary text-center">Envoyer</button>
-      {{ form_end(modif) }}
-
-</div>
+    </div>
+	</div>
 {% endblock %}
