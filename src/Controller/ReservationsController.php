@@ -8,6 +8,9 @@ use App\Repository\ReservationsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Response;
+
+use Knp\Snappy\Pdf;
 
 class ReservationsController extends AbstractController
 {
@@ -47,5 +50,32 @@ class ReservationsController extends AbstractController
     {
 
         return $this->render('reservations/panier.html.twig', []);
+    }
+
+    //////////////////////
+    /// Generation PDF ///
+    //////////////////////
+
+    /**
+     * @Route("/pdf", name="_pdf")
+     * @return Response
+     */
+
+    public function pdfAction(\Knp\Snappy\Pdf $snappy)
+    {
+        $html = $this->renderView("user/user_panel.html.twig", [
+            "title" => "Votre Facture"
+        ]);
+
+        $filename = "custom_pdf_from_twig";
+
+        return new Response(
+            $snappy->generateFromHtml($html, 'pdflol.pdf'),
+            200,
+            [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="'.$filename.'.pdf"'
+            ]
+        );
     }
 }

@@ -1,0 +1,10 @@
+knp_snappy:
+    pdf:
+        enabled:    true
+        binary:     '"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"'
+        options:    []
+    temporary_folder: 'C:\Users\x512\Desktop\Développement Web\Sites sous Symfony\reservation\temp\'
+    image:
+        enabled:    true
+        binary:     "C:/Program Files/wkhtmltopdf/bin/wkhtmltoimage.exe"
+        options:    []

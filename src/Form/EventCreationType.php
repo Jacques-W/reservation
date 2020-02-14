@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -51,6 +52,10 @@ class EventCreationType extends AbstractType
             ->add('tarif', TextType::class, [
                 'label' => 'Le Prix de la représentation'
             ])
+            ->add('image', FileType::class,[
+                'label' =>"Choisir l'image",
+                'data_class' => null
+            ]);
         ;
     }
 

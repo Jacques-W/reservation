@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -53,10 +54,34 @@ class Event
      */
     private $reservations;
 
+    /**
+     * @ORM\Column(type="string", length =255)
+     * @Assert\NotBlank(message="Ajouter une image")
+     * @Assert\File(mimeTypes={"image/jpeg"})
+     */
+    private $image;
+
     public function __construct()
     {
         $this->reservations = new ArrayCollection();
     }
+
+
+    public function getNbPlacesDispos() {
+        $places_dispos = 0;
+        foreach($this->getReservations() as $reservation) {
+            if (!$reservation->getUser()) { $places_dispos++; }
+        }
+        return $places_dispos;
+    }
+
+    public function isFull()
+    {
+        if ($this->getNbPlacesDispos() >= 0) { return true; }
+        return false;
+    }
+
+
 
     public function getId(): ?int
     {
@@ -162,6 +187,18 @@ class Event
                 $reservation->setEvent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function setImage($image)
+    {
+        $this->image = $image;
 
         return $this;
     }

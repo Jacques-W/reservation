@@ -2,7 +2,7 @@
 {% block body %}
 <div class="col-md-4 mb-4">
 	<div class="card h-100">
-		<img src="https://www.lamaisonbleue-stbg.com/fichiers/2020/01/jamesleg-500x500.jpg" class="card-img-top" alt="">
+		<img src="{{ asset('uploads/images/' ~ event.image) }}" class="card-img-top" alt="">
 		<div class="card-body">
 			<h5 class="card-title">{{ event.artiste }}</h5>
 			<p class="card-text">

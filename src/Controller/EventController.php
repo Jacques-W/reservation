@@ -8,6 +8,7 @@ use App\Entity\Event;
 use App\Entity\Reservations;
 use App\Repository\EventRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -32,6 +33,28 @@ class EventController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+
+            // ici commence le code pour uploader une image
+            $file= $event->getImage();
+            $fileName = md5(uniqid()). ' . ' .$file->guessExtension();
+            try {
+                $file->move(
+                    $this->getParameter('images_directory'),
+                    $fileName
+                );
+
+            } catch (FileException $e) {
+                // throw $e;
+
+                //ATTENTION! IL FAUT METTRE LA LIGNE DE COMMANDE CI-DESSOUS
+                // DANS LE FICHIER SERVICES.YAML SE TROUVANT DANS LE REPERTOIRE CONFIG
+                //JUSTE AU DESSUS DE 'SERVICE:'
+                //PS:NOUBLIES PAS DE CREER LES REPERTOIRES UPLOADS ET IMAGES DANS PUBLIC
+                // parameters:
+                // images_directory: '%kernel.project_dir%/public/uploads/images'
+
+            }//Ici se termine le code pour uploader une image
+
             $em = $this->getDoctrine()->getManager();
 
             $event = $form->getData();
